@@ -12,7 +12,7 @@ clr_demo () {
 'echo "$(clr cb)Cyan on Blue with $(clr G)a span$(clr c) of bright green text$(clr)"'
 'echo "$(clr cb)Cyan on Blue with $(clr .B)a span$(clr .b) of bright blue background$(clr)"'
   )
-echo "Examples: "
+printf "\nExamples: \n\n"
 for example in "${examples[@]}"; do
    printf "$ %s\n" "$example"
    eval "$example"
@@ -23,7 +23,7 @@ clr_tables() {
   local format desc bg fg code colors=( r R y Y g G b B c C m M k K w W . @)
   for format in '' + _ _+; do
     case $format in
-      '') desc="Normal";;
+      '') desc="Normal Text";;
       +)  desc="Bold";;
       _)  desc="Underline";;
       _+) desc="Bold Underline";;

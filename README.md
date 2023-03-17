@@ -1,7 +1,7 @@
 # clr.sh
 clr.sh: ANSI coloring function for bash scripts, absurdly minified
 
-[What?](#whats-this) | [Usage](#Usage) | [Why?](#why-would-i-use-this)
+[What?](#whats-this) | [Usage](#Usage) | [Why?](#why-would-i-use-this) | [How?](#how-does-this-thing-work)
 
 ## What's This? 
 
@@ -97,3 +97,55 @@ The `clr()` function returns exactly one ANSI escape sequence containing all the
 You might find yourself forgetting these abbreviations. "Did I use `YEL` or `YLW`? Did I use `CYA` or `CYN`?"
 
 If you can remember what [RGB](https://en.wikipedia.org/wiki/RGB_color_model) is, and what [CMYK](https://en.wikipedia.org/wiki/CMYK_color_model) is, and that "white" starts with `w`, you already know all the color symbols you'll need in the `clr()` function. 
+
+## How does this thing work?
+
+Coming soon, an annotated walkthrough of how this function works. 
+
+Here is the function when expanded and formatted by using bash's `type` builtin:
+
+```
+$ type clr
+clr is a function
+clr ()
+{
+    ( local i=$1 l=krgybmcw@ b g c s;
+    function n ()
+    {
+        x=${l%"${1,}"*};
+        x=${#x};
+        ((x<8&&(x+=b+g)||(x=39+g)));
+        printf %d $x
+    };
+    while c=${i::1};
+    [ "$c" ] && ((g<11)); do
+        i=${i:1};
+        b=30;
+        case $c in
+            +)
+                s+=";1"
+            ;;
+            =)
+                s+=";22"
+            ;;
+            _)
+                s+=";4"
+            ;;
+            -)
+                s+=";24"
+            ;;
+            .)
+                ((g+=10))
+            ;;
+            [${l^^}])
+                b=90
+            ;;&
+            [${l^^}] | [$l])
+                s+=";$(n "$c")";
+                ((g+=10))
+            ;;
+        esac;
+    done;
+    printf %b "\e[${s#;}m" )
+}
+```

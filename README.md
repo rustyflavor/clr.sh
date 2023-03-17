@@ -98,6 +98,10 @@ You might find yourself forgetting these abbreviations. "Did I use `YEL` or `YLW
 
 If you can remember what [RGB](https://en.wikipedia.org/wiki/RGB_color_model) is, and what [CMYK](https://en.wikipedia.org/wiki/CMYK_color_model) is, and that "white" starts with `w`, you already know all the color symbols you'll need in the `clr()` function. 
 
+## Compatability
+
+This function requires bash v4.0 or higher. (Due to `;;&` fall-through for `case`, and `${var,}`/`${var^^}` lower-case/upper-case expansions.) 
+
 ## How does this thing work?
 
 Coming soon, an annotated walkthrough of how this function works. 

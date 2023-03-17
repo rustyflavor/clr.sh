@@ -29,7 +29,7 @@ Called without a string as `$(clr)` will result in the reset code clearing all f
 
 `string` is comprised of the following symbols:
 
-Formatting symbols:
+### Formatting symbols:
 
 | Symbol         | Format           | Raw ANSI |
 | -------------- | ---------------- | -------- |
@@ -38,11 +38,11 @@ Formatting symbols:
 | + (plus)       | Bold             | `\e[1m`  |
 | = (equal sign) | Remove Bold      | `\e[22m` |
 
-*Note that each remove symbol is the same keyboard key as the formatting symbol, unshifted.*
+*Note that each remove symbol is the same US keyboard key as the formatting symbol, unshifted.*
 
 Formatting symbols should come before color symbols.
 
-Color symbols: 
+### Color symbols: 
 
 | Symbol | Color   | Symbol | Color |
 | ------ | ------- | ------ | ---------------- |

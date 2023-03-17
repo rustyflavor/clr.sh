@@ -98,7 +98,7 @@ You might find yourself forgetting these abbreviations. "Did I use `YEL` or `YLW
 
 If you can remember what [RGB](https://en.wikipedia.org/wiki/RGB_color_model) is, and what [CMYK](https://en.wikipedia.org/wiki/CMYK_color_model) is, and that "white" starts with `w`, you already know all the color symbols you'll need in the `clr()` function. 
 
-## Compatability
+## Compatibility
 
 The snippet should be safe to use in any POSIX shell.  
 

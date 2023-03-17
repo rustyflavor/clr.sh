@@ -1,6 +1,8 @@
 # clr.sh
 clr.sh: ANSI coloring function for bash scripts, absurdly minified
 
+[What?](#whats-this) | [Usage](#Usage) | [Why?](#why-would-i-use-this)
+
 ## What's This? 
 
 clr.sh is a file containing a highly-minified bash function that you can source from your script, or paste within your script. 
@@ -16,6 +18,54 @@ Here is a picture of it in action:
 Here is a table of the supported color combinations and the codes that represent them:
 
 ![Color Table](https://raw.githubusercontent.com/rustyflavor/clr.sh/main/images/clr_table.png)
+
+## Usage
+
+Insert the function in your bash script, or source it with `source /path/to/clr.sh`, and call it using its minimalist syntax:
+
+`$(clr.sh string)`
+
+Called without a string as `$(clr)` will result in the reset code clearing all formatting. 
+
+`string` is comprised of the following symbols:
+
+Formatting symbols:
+
+| Symbol         | Format           | Raw ANSI |
+| -------------- | ---------------- | -------- |
+| _ (underscore) | Underline        | `\e[4m`  |
+| - (minus)      | Remove underline | `\e[24m` |
+| + (plus)       | Bold             | `\e[1m`  |
+| = (equal sign) | Remove Bold      | `\e[22m` |
+
+*Note that each remove symbol is the same keyboard key as the formatting symbol, unshifted.*
+
+Formatting symbols should come before color symbols.
+
+Color symbols: 
+
+| Symbol | Color   | Symbol | Color |
+| ------ | ------- | ------ | ---------------- |
+| r      | Red     | R      | Bright Red       |
+| g      | Green   | G      | Bright Green     |
+| b      | Blue    | B      | Bright Blue      |
+| c      | Cyan    | C      | Bright Cyan      |
+| m      | Magenta | M      | Bright Magenta   |
+| y      | Yellow  | Y      | Bright Yellow    |
+| k      | Black   | K      | Bright Black     |
+| w      | White   | W      | Bright White     |
+| .      | None    | @      | Terminal Default |
+
+If you provide one color symbol, the foreground will be adjusted. 
+
+If you provide two color symbols, the first represents the foreground and the second the background. 
+
+To change the color of the background without changing the foreground, use the `.` dot character as the foreground symbol.  
+(e.g. `$(clr .g)` will change the background to green without changing the foreground.) 
+
+The function finishes as soon as it recognizes a second valid color symbol. Excess input will be discarded. (This is why formatting symbols should be placed first.)
+
+The @ symbol represents the terminal's default foreground and background colors. (ANSI `\e[39m` and `\e[49m`)
 
 ## Why would I use this?
 

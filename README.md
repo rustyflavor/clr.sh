@@ -100,7 +100,15 @@ If you can remember what [RGB](https://en.wikipedia.org/wiki/RGB_color_model) is
 
 ## Compatability
 
-This function requires bash v4.0 or higher. (Due to `;;&` fall-through for `case`, and `${var,}`/`${var^^}` lower-case/upper-case expansions.) 
+The snippet should be safe to use in any POSIX shell.  
+
+**Bash v4.0 or higher is required for its coloring and formatting to work** (due to `;;&` fall-through for `case`, and `${var,}`/`${var^^}` lower-case/upper-case expansions). 
+
+It should degrade gracefully without error on incompatible shells. Your `$(clr...)` codes will simply have no effect and your script will run colorlessly. 
+
+This is because it is wrapped with a compatibility test with a safe fallback function for incompatible shells: 
+
+`[ ${BASH_VERSINFO[0]} -ge 4 ] && ... || clr(){ :;}`
 
 ## How does this thing work?
 

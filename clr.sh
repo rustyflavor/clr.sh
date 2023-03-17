@@ -13,4 +13,4 @@ n(){ x=${l%"${1,}"*};x=${#x};((x<8&&(x+=b+g)||(x=39+g)));printf %d $x;}
 while c=${i::1};[ "$c" ]&&((g<11));do i=${i:1};b=30;case $c in +)s+=";1";;
 =)s+=";22";;_)s+=";4";;-)s+=";24";;.)((g+=10));;[${l^^}])b=90;;&
 [${l^^}]|[$l])s+=";$(n "$c")";((g+=10));esac;done;printf %b "\e[${s#;}m")||
-clr(){ :;}
+clr(){ :;} # docs: https://github.com/rustyflavor/clr.sh

@@ -23,11 +23,15 @@ Here is a table of the supported color combinations and the codes that represent
 
 Insert the function in your bash script, or source it with `source /path/to/clr.sh`, and call it using its minimalist syntax:
 
-`$(clr.sh string)`
+`$(clr string)`
 
-Called without a string as `$(clr)` will result in the reset code clearing all formatting. 
+Call it without a string to reset to normal formatting/coloring with the `\e[m` reset signal.
 
-`string` is comprised of the following symbols:
+`$(clr)`
+
+Calling it with a string that contains no valid formatting or coloring symbols has the same result as calling it without a string, since invalid symbols are discarded. 
+
+`string` should be comprised of the following symbols:
 
 ### Formatting symbols:
 
@@ -60,12 +64,11 @@ If you provide one color symbol, the foreground will be adjusted.
 
 If you provide two color symbols, the first represents the foreground and the second the background. 
 
-To change the color of the background without changing the foreground, use the `.` dot character as the foreground symbol.  
-(e.g. `$(clr .g)` will change the background to green without changing the foreground.) 
+To change the color of the background without changing the foreground, use the `.` dot character as the foreground symbol. For example, `$(clr .g)` will change the background to green without changing the foreground. This lets you efficiently omit a redundant foreground parameter in the resulting escape sequence. 
 
-The function finishes as soon as it recognizes a second valid color symbol. Excess input will be discarded. (This is why formatting symbols should be placed first.)
+The function finishes and emits your requested escape sequence as soon as it recognizes a second valid color symbol. Excess input will be discarded. (This is why formatting symbols should be placed first.)
 
-The @ symbol represents the terminal's default foreground and background colors. (ANSI `\e[39m` and `\e[49m`)
+The @ symbol represents the terminal's default foreground and background colors (ANSI `\e[39m` and `\e[49m`). If the first color symbol is `@`, the user's preferred foreground color will be applied. Likewise for the their preferred background color when `@` is the second color symbol. 
 
 ## Why would I use this?
 
@@ -161,3 +164,10 @@ clr ()
     printf %b "\e[${s#;}m" )
 }
 ```
+
+## Known Issues
+
+* This function uses an extreme, imperfect application of [Postel's Law](https://en.wikipedia.org/wiki/Robustness_principle). 
+  * It does nothing to validate your input beyond discarding what it can't interpret. If you misguidedly call it with `$(clr black)` it will interpret the `b` as blue, discard `l` and `a`, interpret the `c` as cyan, figure it's done since it found two color symbols, and start spitting out blue text on cyan background. 
+  * It will allow you to combine contradictory symbols, and emit a likewise contradictory escape code. `$(clr +=)` (bold, not bold) will result in the equivalently nonsensical ANSI sequence `\e[1;22m`. (From what I've seen, when terminals receive contradictory parameters they interpret it according to which comes last. I don't know if this is part of the specification, maybe the behavior varies elsewhere.) 
+  * Likewise, it honors redundant formatting symbols. If you call `$(clr ++++)` you will get back `\e[1;1;1;1m`.  

@@ -11,5 +11,5 @@
 ((BASH_VERSINFO[0]>3))&&clr(){ local i=$1 l=krgybmcw@ b g c s x
 while c=${i::1};[ "$c" ]&&((g<11));do i=${i:1};b=30;case $c in +)s+=";1";;
 =)s+=";22";;_)s+=";4";;-)s+=";24";;.)((g+=10));;[${l^^}])b=90;;&[${l^^}]|[$l])
-x=${l%"${c,}"*};x=${#x};x=$((x<8?x+b+g:39+g));s+=";$x";((g+=10));esac;done;
+x=${l%"${c,}"*};x=${#x};s+=";$((x<8?x+b+g:39+g))";((g+=10));esac;done;
 printf %b "\e[${s#;}m";}||clr(){ :;} # https://github.com/rustyflavor/clr.sh

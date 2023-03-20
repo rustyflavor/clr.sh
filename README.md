@@ -103,67 +103,13 @@ If you can remember what [RGB](https://en.wikipedia.org/wiki/RGB_color_model) is
 
 ## Compatibility
 
-The snippet should be safe to use in any POSIX shell.  
-
 **Bash v4.0 or higher is required for its coloring and formatting to work** (due to `;;&` fall-through for `case`, and `${var,}`/`${var^^}` lower-case/upper-case expansions). 
 
-It should degrade gracefully without error on incompatible shells. Your `$(clr...)` codes will simply have no effect and your script will run colorlessly. 
-
-This is because it is wrapped with a compatibility test with a safe fallback function for incompatible shells: 
-
-`[ ${BASH_VERSINFO[0]} -ge 4 ] && ... || clr(){ :;}`
+[It should degrade gracefully without error on incompatible versions.](https://github.com/rustyflavor/clr.sh/wiki/How-does-this-work%3F#compatibility-wrapper) Your `$(clr...)` codes will simply have no effect and your script will run colorlessly. 
 
 ## How does this thing work?
 
-Coming soon, an annotated walkthrough of how this function works. 
-
-Here is the function when expanded and formatted by using bash's `type` builtin:
-
-```
-$ type clr
-clr is a function
-clr ()
-{
-    ( local i=$1 l=krgybmcw@ b g c s;
-    function n ()
-    {
-        x=${l%"${1,}"*};
-        x=${#x};
-        ((x<8&&(x+=b+g)||(x=39+g)));
-        printf %d $x
-    };
-    while c=${i::1};
-    [ "$c" ] && ((g<11)); do
-        i=${i:1};
-        b=30;
-        case $c in
-            +)
-                s+=";1"
-            ;;
-            =)
-                s+=";22"
-            ;;
-            _)
-                s+=";4"
-            ;;
-            -)
-                s+=";24"
-            ;;
-            .)
-                ((g+=10))
-            ;;
-            [${l^^}])
-                b=90
-            ;;&
-            [${l^^}] | [$l])
-                s+=";$(n "$c")";
-                ((g+=10))
-            ;;
-        esac;
-    done;
-    printf %b "\e[${s#;}m" )
-}
-```
+I've put together [a wiki page](https://github.com/rustyflavor/clr.sh/wiki/How-does-this-work%3F) explaining how this works in agonizing detail. 
 
 ## Known Issues
 

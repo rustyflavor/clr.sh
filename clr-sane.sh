@@ -15,15 +15,16 @@ clr() {
         input=${input:1}
         bright=30
         case $char in
-            +) seq+=';1';; =) seq+=';22';;
-            _) seq+=';4';; -) seq+=';24';;
-            .) ((ground+=10));;
+            +) seq+=';1' ;; =) seq+=';22' ;;
+            _) seq+=';4' ;; -) seq+=';24' ;;
+            .) (( ground += 10 )) ;;
             [${list^^}]) bright=90 ;&
             [$list])
                 index=${list%"${char,}"*}
                 index=${#index}
                 seq+=";$(( index<8 ? index+bright+ground : 39+ground ))"
-            (( ground += 10 ))
+                (( ground += 10 ))
+            ;;
         esac
     done
     printf %b "\e[${seq#;}m"

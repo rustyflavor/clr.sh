@@ -74,7 +74,7 @@ The @ symbol represents the terminal's default foreground and background colors 
 
 If you aren't already tempted by the examples shown, you probably don't need this. 
 
-If you write scripts that use color liberally, they might have blocks of variable definitions that looks like this:
+If you write scripts that use color liberally, they might have blocks of variable definitions that look like this:
 
 ```
 BLK='\e[30m'; blk='\e[90m'; BBLK='\e[40m'; bblk='\e[100m'
